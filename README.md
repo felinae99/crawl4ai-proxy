@@ -8,7 +8,7 @@ Given a `compose.yml` file that looks something like this:
 ```
 services:
     crawl4ai-proxy:
-        image: ghcr.io/lennyerik/crawl4ai-proxy:latest
+        image: ghcr.io/felinae99/crawl4ai-proxy:latest
         environment:
             - LISTEN_PORT=8000
             - CRAWL4AI_ENDPOINT=http://crawl4ai:11235/crawl
@@ -44,3 +44,7 @@ Run `docker compose up -d`, visit `localhost:8080` in a browser, navigate to `Ad
     Web Loader Engine: external
     External Web Loader URL: http://crawl4ai-proxy:8000/crawl
     External Web Loader API Key: * (doesn't matter, but is a required field)
+
+###
+Fork from https://github.com/lennyerik/crawl4ai-proxy
+update Content-Type: application/json
