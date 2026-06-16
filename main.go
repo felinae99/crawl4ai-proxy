@@ -111,7 +111,10 @@ func CrawlEndpoint(response http.ResponseWriter, request *http.Request) {
 	if err != nil {
 		panic(err)
 	}
-
+	
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Accept", "application/json")
+	
 	crawlResponse, err := http.DefaultClient.Do(req)
 	if err != nil || crawlResponse.StatusCode != 200 {
 		response.WriteHeader(502)
