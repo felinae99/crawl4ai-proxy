@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - test-c4a-0.9
   workflow_dispatch:
 
 permissions:
