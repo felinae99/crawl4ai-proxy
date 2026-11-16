@@ -50,10 +50,13 @@ networks:
         external: false
 ```
 
-Run docker compose up -d, visit localhost:8080 in a browser, navigate to Admin Panel -> Settings -> Web Search and under the "Loader" section, set:
+Run `docker compose up -d`, visit `localhost:8080` in a browser, navigate to `Admin Panel -> Settings -> Web Search` and under the "Loader" section, set:
 
-Web Loader Engine: external
-External Web Loader URL: http://crawl4ai-proxy:8000/crawl
-External Web Loader API Key: * (doesn't matter, but is a required field in OpenWebUI)
-Forked from lennyerik/crawl4ai-proxy.
-Updated to support Crawl4AI 0.9.x authentication (CRAWL4AI_API_TOKEN) and proper request payload handling.
+- **Web Loader Engine**: `external`
+- **External Web Loader URL**: `http://crawl4ai-proxy:8000/crawl`
+- **External Web Loader API Key**: `*` *(doesn't matter, but is a required field in OpenWebUI)*
+
+
+Forked from [lennyerik/crawl4ai-proxy](https://github.com/lennyerik/crawl4ai-proxy).
+
+Updated to support Crawl4AI 0.9.x authentication (`CRAWL4AI_API_TOKEN`) and proper request payload handling.
