@@ -1,8 +1,10 @@
 # crawl4ai OpenWebUI proxy
+
 This simple proxy server can be run in a docker container to let an [OpenWebUI](https://github.com/open-webui/open-webui) instance interact with a [crawl4ai](https://github.com/unclecode/crawl4ai) instance.
-This makes the OpenWebUI's web search feature a lot faster and way more usable without paying for an API service. 🎉
+This makes OpenWebUI's web search feature a lot faster and way more usable without paying for an API service. 🎉
 
 ## Usage
+
 Given a `compose.yml` file that looks something like this:
 
 ```
@@ -12,6 +14,8 @@ services:
         environment:
             - LISTEN_PORT=8000
             - CRAWL4AI_ENDPOINT=http://crawl4ai:11235/crawl
+            # API Token for crawl4ai authentication (0.9.x+)
+            - CRAWL4AI_API_TOKEN=your_crawl4ai_api_token
         networks:
             - openwebui
 
@@ -30,21 +34,26 @@ services:
             - openwebui
 
     crawl4ai:
-        image: unclecode/crawl4ai:0.6.0-r2
-        shm_size: 1g
+        image: unclecode/crawl4ai:latest
+        shm_size: 2g
+        environment:
+            # Must match CRAWL4AI_API_TOKEN in crawl4ai-proxy
+            - CRAWL4AI_API_TOKEN=your_crawl4ai_api_token
+            # Required for 0.9.x+: disable strict SSRF and TLS checks to prevent false-positive blocks
+            - CRAWL4AI_ALLOW_INTERNAL_URLS=true
+            - CRAWL4AI_ALLOW_INSECURE_TLS=true
         networks:
             - openwebui
 
 networks:
-    - openwebui
+    openwebui:
+        external: false
 ```
 
-Run `docker compose up -d`, visit `localhost:8080` in a browser, navigate to `Admin Panel->Web Search` and under the "Loader" section, set
+Run docker compose up -d, visit localhost:8080 in a browser, navigate to Admin Panel -> Settings -> Web Search and under the "Loader" section, set:
 
-    Web Loader Engine: external
-    External Web Loader URL: http://crawl4ai-proxy:8000/crawl
-    External Web Loader API Key: * (doesn't matter, but is a required field)
-
-###
-Fork from https://github.com/lennyerik/crawl4ai-proxy
-update Content-Type: application/json
+Web Loader Engine: external
+External Web Loader URL: http://crawl4ai-proxy:8000/crawl
+External Web Loader API Key: * (doesn't matter, but is a required field in OpenWebUI)
+Forked from lennyerik/crawl4ai-proxy.
+Updated to support Crawl4AI 0.9.x authentication (CRAWL4AI_API_TOKEN) and proper request payload handling.
